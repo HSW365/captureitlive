@@ -1,0 +1,28 @@
+{
+  "name": "CaptureIt Live - Global Wellness Community",
+  "short_name": "CaptureIt Live",
+  "description": "Transform your wellness journey with AI-driven coaching, global community connections, and personalized insights.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a1628",
+  "theme_color": "#d4a574",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/attached_assets/captureit.live logo_1754605698795.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/attached_assets/captureit.live logo_1754605698795.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["health", "lifestyle", "wellness", "mental health"],
+  "lang": "en-US",
+  "scope": "/",
+  "prefer_related_applications": false
+}

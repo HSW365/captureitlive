@@ -2,7 +2,7 @@ import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'live.captureit.app',
-  appName: 'CaptureIt',
+  appName: 'CaptureIt Live',
   webDir: 'dist/public',
   server: {
     androidScheme: 'https',

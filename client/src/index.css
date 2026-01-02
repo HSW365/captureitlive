@@ -1,0 +1,362 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(210, 20%, 98%);
+  --foreground: hsl(210, 25%, 7.8431%);
+  --card: hsl(180, 6.6667%, 97.0588%);
+  --card-foreground: hsl(210, 25%, 7.8431%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(210, 25%, 7.8431%);
+  --primary: hsl(203.8863, 88.2845%, 53.1373%);
+  --primary-foreground: hsl(0, 0%, 100%);
+  --secondary: hsl(210, 25%, 7.8431%);
+  --secondary-foreground: hsl(0, 0%, 100%);
+  --muted: hsl(240, 1.9608%, 90%);
+  --muted-foreground: hsl(210, 25%, 7.8431%);
+  --accent: hsl(211.5789, 51.3514%, 92.7451%);
+  --accent-foreground: hsl(203.8863, 88.2845%, 53.1373%);
+  --destructive: hsl(356.3033, 90.5579%, 54.3137%);
+  --destructive-foreground: hsl(0, 0%, 100%);
+  --border: hsl(201.4286, 30.4348%, 90.9804%);
+  --input: hsl(200, 23.0769%, 97.4510%);
+  --ring: hsl(202.8169, 89.1213%, 53.1373%);
+  --chart-1: hsl(203.8863, 88.2845%, 53.1373%);
+  --chart-2: hsl(159.7826, 100%, 36.0784%);
+  --chart-3: hsl(42.0290, 92.8251%, 56.2745%);
+  --chart-4: hsl(147.1429, 78.5047%, 41.9608%);
+  --chart-5: hsl(341.4894, 75.2000%, 50.9804%);
+  --sidebar: hsl(180, 6.6667%, 97.0588%);
+  --sidebar-foreground: hsl(210, 25%, 7.8431%);
+  --sidebar-primary: hsl(203.8863, 88.2845%, 53.1373%);
+  --sidebar-primary-foreground: hsl(0, 0%, 100%);
+  --sidebar-accent: hsl(211.5789, 51.3514%, 92.7451%);
+  --sidebar-accent-foreground: hsl(203.8863, 88.2845%, 53.1373%);
+  --sidebar-border: hsl(205.0000, 25.0000%, 90.5882%);
+  --sidebar-ring: hsl(202.8169, 89.1213%, 53.1373%);
+  --font-sans: 'Inter', sans-serif;
+  --font-serif: 'Playfair Display', serif;
+  --font-mono: 'Menlo', monospace;
+  --radius: 1.3rem;
+  
+  /* Wellness Color Palette - Inspired by Golden Sunset & Blue Waters */
+  --sunset-50: hsl(45, 100%, 97%);   /* Soft morning light */
+  --sunset-100: hsl(43, 100%, 94%);  /* Dawn glow */
+  --sunset-400: hsl(38, 95%, 62%);   /* Golden hour */
+  --sunset-500: hsl(35, 91%, 56%);   /* Pure sunset */
+  --sunset-600: hsl(30, 94%, 52%);   /* Deep sunset */
+  --sunset-700: hsl(25, 95%, 47%);   /* Sunset amber */
+  --sunset-900: hsl(20, 90%, 35%);   /* Evening glow */
+  
+  --ocean-50: hsl(199, 100%, 96%);   /* Sea foam */
+  --ocean-100: hsl(197, 92%, 91%);   /* Light waves */
+  --ocean-400: hsl(195, 84%, 56%);   /* Clear waters */
+  --ocean-500: hsl(199, 89%, 48%);   /* Deep blue */
+  --ocean-600: hsl(201, 94%, 43%);   /* Ocean depth */
+  --ocean-700: hsl(200, 100%, 36%);  /* Deep current */
+  --ocean-900: hsl(220, 39%, 11%);   /* Ocean floor */
+  
+  --peace-50: hsl(138, 100%, 97%);   /* Zen white */
+  --peace-100: hsl(140, 84%, 92%);   /* Meditation mist */
+  --peace-400: hsl(155, 64%, 58%);   /* Calm green */
+  --peace-500: hsl(158, 64%, 52%);   /* Mindful green */
+  --peace-600: hsl(160, 67%, 47%);   /* Forest peace */
+  --peace-700: hsl(159, 75%, 41%);   /* Deep calm */
+  --peace-900: hsl(158, 100%, 10%);  /* Shadow rest */
+  
+  --warmth-50: hsl(48, 100%, 96%);   /* Gentle warmth */
+  --warmth-100: hsl(48, 96%, 89%);   /* Soft amber */
+  --warmth-400: hsl(42, 95%, 62%);   /* Honey glow */
+  --warmth-500: hsl(43, 96%, 56%);   /* Golden light */
+  --warmth-600: hsl(35, 95%, 52%);   /* Rich amber */
+  --warmth-700: hsl(28, 92%, 48%);   /* Warm embrace */
+  --warmth-900: hsl(20, 88%, 35%);   /* Cozy depth */
+  
+  --serenity-50: hsl(250, 100%, 98%); /* Pure calm */
+  --serenity-100: hsl(245, 89%, 95%); /* Peaceful mist */
+  --serenity-400: hsl(240, 75%, 70%); /* Gentle twilight */
+  --serenity-500: hsl(238, 82%, 66%); /* Evening peace */
+  --serenity-600: hsl(235, 85%, 61%); /* Deep serenity */
+  --serenity-700: hsl(232, 88%, 56%); /* Meditation depth */
+  --serenity-900: hsl(230, 90%, 42%); /* Inner stillness */
+  
+  --flow-500: hsl(160, 84%, 39%);    /* Water flow */
+  --flow-600: hsl(160, 84%, 34%);    /* Current flow */
+}
+
+.dark {
+  --background: hsl(0, 0%, 0%);
+  --foreground: hsl(200, 6.6667%, 91.1765%);
+  --card: hsl(228, 9.8039%, 10%);
+  --card-foreground: hsl(0, 0%, 85.0980%);
+  --popover: hsl(0, 0%, 0%);
+  --popover-foreground: hsl(200, 6.6667%, 91.1765%);
+  --primary: hsl(203.7736, 87.6033%, 52.5490%);
+  --primary-foreground: hsl(0, 0%, 100%);
+  --secondary: hsl(195.0000, 15.3846%, 94.9020%);
+  --secondary-foreground: hsl(210, 25%, 7.8431%);
+  --muted: hsl(0, 0%, 9.4118%);
+  --muted-foreground: hsl(210, 3.3898%, 46.2745%);
+  --accent: hsl(205.7143, 70%, 7.8431%);
+  --accent-foreground: hsl(203.7736, 87.6033%, 52.5490%);
+  --destructive: hsl(356.3033, 90.5579%, 54.3137%);
+  --destructive-foreground: hsl(0, 0%, 100%);
+  --border: hsl(210, 5.2632%, 14.9020%);
+  --input: hsl(207.6923, 27.6596%, 18.4314%);
+  --ring: hsl(202.8169, 89.1213%, 53.1373%);
+  --chart-1: hsl(203.8863, 88.2845%, 53.1373%);
+  --chart-2: hsl(159.7826, 100%, 36.0784%);
+  --chart-3: hsl(42.0290, 92.8251%, 56.2745%);
+  --chart-4: hsl(147.1429, 78.5047%, 41.9608%);
+  --chart-5: hsl(341.4894, 75.2000%, 50.9804%);
+  --sidebar: hsl(228, 9.8039%, 10%);
+  --sidebar-foreground: hsl(0, 0%, 85.0980%);
+  --sidebar-primary: hsl(202.8169, 89.1213%, 53.1373%);
+  --sidebar-primary-foreground: hsl(0, 0%, 100%);
+  --sidebar-accent: hsl(205.7143, 70%, 7.8431%);
+  --sidebar-accent-foreground: hsl(203.7736, 87.6033%, 52.5490%);
+  --sidebar-border: hsl(205.7143, 15.7895%, 26.0784%);
+  --sidebar-ring: hsl(202.8169, 89.1213%, 53.1373%);
+}
+
+.nature {
+  --background: hsl(138, 100%, 97%);
+  --foreground: hsl(158, 64%, 18%);
+  --card: hsl(138, 76%, 95%);
+  --card-foreground: hsl(158, 64%, 18%);
+  --popover: hsl(138, 100%, 97%);
+  --popover-foreground: hsl(158, 64%, 18%);
+  --primary: hsl(158, 64%, 52%);
+  --primary-foreground: hsl(0, 0%, 100%);
+  --secondary: hsl(158, 64%, 18%);
+  --secondary-foreground: hsl(0, 0%, 100%);
+  --muted: hsl(138, 76%, 90%);
+  --muted-foreground: hsl(158, 64%, 18%);
+  --accent: hsl(138, 76%, 88%);
+  --accent-foreground: hsl(158, 64%, 52%);
+  --destructive: hsl(356.3033, 90.5579%, 54.3137%);
+  --destructive-foreground: hsl(0, 0%, 100%);
+  --border: hsl(138, 30%, 85%);
+  --input: hsl(138, 23%, 95%);
+  --ring: hsl(158, 64%, 52%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+    font-family: var(--font-sans);
+  }
+  
+  .font-playfair {
+    font-family: var(--font-serif);
+  }
+}
+
+@layer utilities {
+  .glassmorphism {
+    background: linear-gradient(135deg, 
+      rgba(255, 255, 255, 0.2) 0%, 
+      rgba(255, 248, 220, 0.15) 50%, 
+      rgba(255, 255, 255, 0.1) 100%);
+    backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    box-shadow: 0 8px 32px rgba(255, 165, 0, 0.1);
+  }
+  
+  .dark .glassmorphism {
+    background: linear-gradient(135deg, 
+      rgba(0, 0, 0, 0.3) 0%, 
+      rgba(25, 25, 112, 0.2) 50%, 
+      rgba(0, 0, 0, 0.25) 100%);
+    border: 1px solid rgba(135, 206, 235, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 100, 200, 0.1);
+  }
+  
+  .nature .glassmorphism {
+    background: linear-gradient(135deg, 
+      rgba(144, 238, 144, 0.2) 0%, 
+      rgba(240, 248, 255, 0.15) 50%, 
+      rgba(152, 251, 152, 0.1) 100%);
+    border: 1px solid rgba(102, 205, 170, 0.3);
+    box-shadow: 0 8px 32px rgba(60, 179, 113, 0.15);
+  }
+  
+  .wellness-gradient {
+    background: linear-gradient(135deg, 
+      var(--sunset-500) 0%, 
+      var(--warmth-500) 25%, 
+      var(--ocean-500) 50%, 
+      var(--peace-500) 75%, 
+      var(--serenity-500) 100%);
+    background-size: 400% 400%;
+    animation: sunsetFlow 12s ease infinite;
+  }
+  
+  .sunset-glow {
+    background: radial-gradient(circle at center, 
+      var(--sunset-400) 0%, 
+      var(--warmth-500) 40%, 
+      var(--sunset-600) 100%);
+    box-shadow: 0 0 60px rgba(255, 165, 0, 0.4), 
+                0 0 100px rgba(255, 140, 0, 0.2);
+  }
+  
+  .nature-texture {
+    background-image: radial-gradient(circle at 1px 1px, rgba(16, 185, 129, 0.15) 1px, transparent 0);
+    background-size: 20px 20px;
+  }
+  
+  .karma-glow {
+    box-shadow: 0 0 30px rgba(255, 165, 0, 0.4), 
+                0 0 60px rgba(255, 215, 0, 0.2),
+                inset 0 0 20px rgba(255, 235, 59, 0.1);
+    animation: karmaGlow 3s ease-in-out infinite alternate;
+  }
+  
+  .meditation-aura {
+    position: relative;
+    overflow: visible;
+  }
+  
+  .meditation-aura::before {
+    content: '';
+    position: absolute;
+    top: -20px; left: -20px; right: -20px; bottom: -20px;
+    background: radial-gradient(circle, 
+      rgba(255, 215, 0, 0.1) 0%, 
+      rgba(135, 206, 235, 0.1) 50%, 
+      transparent 100%);
+    border-radius: inherit;
+    z-index: -1;
+    animation: auraBreath 4s ease-in-out infinite;
+  }
+  
+  .wellness-card:hover {
+    transform: translateY(-4px);
+    transition: all 0.3s ease;
+  }
+  
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .animate-pulse-slow {
+    animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  .animate-gradient {
+    animation: gradient 8s ease infinite;
+  }
+  
+  .biometric-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+}
+
+@keyframes float {
+  0%, 100% { 
+    transform: translateY(0px); 
+  }
+  50% { 
+    transform: translateY(-10px); 
+  }
+}
+
+@keyframes sunsetFlow {
+  0% { background-position: 0% 50%; }
+  25% { background-position: 100% 25%; }
+  50% { background-position: 100% 75%; }
+  75% { background-position: 0% 75%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes karmaGlow {
+  0% { 
+    box-shadow: 0 0 20px rgba(255, 165, 0, 0.3), 
+                0 0 40px rgba(255, 215, 0, 0.2);
+  }
+  100% { 
+    box-shadow: 0 0 40px rgba(255, 165, 0, 0.5), 
+                0 0 80px rgba(255, 215, 0, 0.3),
+                0 0 120px rgba(255, 235, 59, 0.1);
+  }
+}
+
+@keyframes auraBreath {
+  0%, 100% { 
+    transform: scale(1); 
+    opacity: 0.6;
+  }
+  50% { 
+    transform: scale(1.1); 
+    opacity: 0.8;
+  }
+}
+
+@keyframes peacefulPulse {
+  0%, 100% { 
+    transform: scale(1) rotate(0deg); 
+    filter: hue-rotate(0deg);
+  }
+  50% { 
+    transform: scale(1.02) rotate(1deg); 
+    filter: hue-rotate(10deg);
+  }
+}
+
+/* Color utility classes */
+.text-ocean-500 { color: var(--ocean-500); }
+.text-ocean-600 { color: var(--ocean-600); }
+.text-sage-500 { color: var(--sage-500); }
+.text-sage-600 { color: var(--sage-600); }
+.text-sage-700 { color: var(--sage-700); }
+.text-amber-500 { color: var(--amber-500); }
+.text-amber-600 { color: var(--amber-600); }
+.text-lavender-500 { color: var(--lavender-500); }
+.text-lavender-600 { color: var(--lavender-600); }
+
+.bg-ocean-50 { background-color: var(--ocean-50); }
+.bg-ocean-500 { background-color: var(--ocean-500); }
+.bg-sage-50 { background-color: var(--sage-50); }
+.bg-sage-100 { background-color: var(--sage-100); }
+.bg-sage-500 { background-color: var(--sage-500); }
+.bg-sage-900 { background-color: var(--sage-900); }
+.bg-amber-50 { background-color: var(--amber-50); }
+.bg-amber-100 { background-color: var(--amber-100); }
+.bg-amber-500 { background-color: var(--amber-500); }
+.bg-amber-900 { background-color: var(--amber-900); }
+.bg-lavender-50 { background-color: var(--lavender-50); }
+.bg-lavender-100 { background-color: var(--lavender-100); }
+.bg-lavender-500 { background-color: var(--lavender-500); }
+.bg-lavender-900 { background-color: var(--lavender-900); }
+
+.border-sage-500 { border-color: var(--sage-500); }
+.border-ocean-500 { border-color: var(--ocean-500); }
+.border-amber-500 { border-color: var(--amber-500); }
+.border-lavender-500 { border-color: var(--lavender-500); }
+
+.from-sage-500 { --tw-gradient-from: var(--sage-500); }
+.to-ocean-500 { --tw-gradient-to: var(--ocean-500); }
+.from-ocean-500 { --tw-gradient-from: var(--ocean-500); }
+.to-blue-500 { --tw-gradient-to: #3b82f6; }
+.from-amber-500 { --tw-gradient-from: var(--amber-500); }
+.to-orange-500 { --tw-gradient-to: #f97316; }
+.from-lavender-500 { --tw-gradient-from: var(--lavender-500); }
+.to-purple-500 { --tw-gradient-to: #a855f7; }
+.from-red-500 { --tw-gradient-from: #ef4444; }
+.to-pink-500 { --tw-gradient-to: #ec4899; }
+.from-green-500 { --tw-gradient-from: #22c55e; }
+.to-emerald-500 { --tw-gradient-to: var(--emerald-500); }
+
+.hover\:from-sage-600:hover { --tw-gradient-from: var(--sage-600); }
+.hover\:to-ocean-600:hover { --tw-gradient-to: var(--ocean-600); }
+.hover\:from-ocean-600:hover { --tw-gradient-from: var(--ocean-600); }
+.hover\:from-amber-600:hover { --tw-gradient-from: var(--amber-600); }
+.hover\:from-lavender-600:hover { --tw-gradient-from: var(--lavender-600); }
+.hover\:to-emerald-600:hover { --tw-gradient-to: var(--emerald-600); }
