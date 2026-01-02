@@ -27,6 +27,9 @@ workflows:
         script: cd ios/App && pod install
       - name: Fetch signing files
         script: |
+          app-store-connect create-certificate \
+            --type IOS_DISTRIBUTION \
+            --save || true
           app-store-connect fetch-signing-files "$BUNDLE_ID" \
             --type IOS_APP_STORE \
             --create
