@@ -29,12 +29,9 @@ export default function Landing() {
             through shared practice and positive energy.
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
-            <Link href="/signup"><Button size="lg">Join Yogo, it's free</Button></Link>
+            <Link href="/pricing"><Button size="lg">Join Yogo — $8/mo</Button></Link>
             <Link href="/community"><Button size="lg" variant="outline">Explore the community</Button></Link>
           </div>
-          <Link href="/pricing" className="inline-block mt-4 text-sm text-muted-foreground hover:text-coral-600 transition-colors">
-            See Practitioner &amp; Instructor plans →
-          </Link>
         </div>
         <div className="relative flex justify-center">
           <SunSalutation className="w-full max-w-sm" />
@@ -72,7 +69,7 @@ export default function Landing() {
         <p className="text-muted-foreground mb-8 max-w-lg mx-auto">
           Whether you teach or you're finding your way onto the mat, Yogo is where that happens next.
         </p>
-        <Link href="/signup"><Button size="lg">Get started</Button></Link>
+        <Link href="/pricing"><Button size="lg">Get started — $8/mo</Button></Link>
       </section>
     </div>
   );

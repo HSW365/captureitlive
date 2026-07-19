@@ -49,7 +49,7 @@ export function Nav() {
           ) : (
             <>
               <Link href="/login"><Button variant="ghost" size="sm">Log in</Button></Link>
-              <Link href="/signup"><Button size="sm">Join Yogo</Button></Link>
+              <Link href="/pricing"><Button size="sm">Join Yogo</Button></Link>
             </>
           )}
         </div>
@@ -74,7 +74,7 @@ export function Nav() {
           ) : (
             <>
               <Link href="/login" onClick={() => setOpen(false)} className="text-sm font-medium">Log in</Link>
-              <Link href="/signup" onClick={() => setOpen(false)}><Button size="sm" className="w-full">Join Yogo</Button></Link>
+              <Link href="/pricing" onClick={() => setOpen(false)}><Button size="sm" className="w-full">Join Yogo</Button></Link>
             </>
           )}
         </div>
