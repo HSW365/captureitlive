@@ -32,6 +32,9 @@ export default function Landing() {
             <Link href="/signup"><Button size="lg">Join Yogo, it's free</Button></Link>
             <Link href="/community"><Button size="lg" variant="outline">Explore the community</Button></Link>
           </div>
+          <Link href="/pricing" className="inline-block mt-4 text-sm text-muted-foreground hover:text-coral-600 transition-colors">
+            See Practitioner &amp; Instructor plans →
+          </Link>
         </div>
         <div className="relative flex justify-center">
           <SunSalutation className="w-full max-w-sm" />

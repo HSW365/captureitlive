@@ -12,6 +12,7 @@ import Community from "@/pages/community";
 import Instructors from "@/pages/instructors";
 import InstructorProfile from "@/pages/instructor-profile";
 import Classes from "@/pages/classes";
+import Pricing from "@/pages/pricing";
 import ClassDetail from "@/pages/class-detail";
 import Dashboard from "@/pages/dashboard";
 import ProfileEdit from "@/pages/profile-edit";
@@ -35,6 +36,7 @@ export default function App() {
             <Route path="/instructors/:id" component={InstructorProfile} />
             <Route path="/classes" component={Classes} />
             <Route path="/classes/:id" component={ClassDetail} />
+            <Route path="/pricing" component={Pricing} />
             <Route path="/dashboard">{() => <ProtectedRoute><Dashboard /></ProtectedRoute>}</Route>
             <Route path="/profile/edit">{() => <ProtectedRoute><ProfileEdit /></ProtectedRoute>}</Route>
             <Route path="/privacy" component={Privacy} />
