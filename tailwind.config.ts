@@ -2,145 +2,50 @@ import type { Config } from "tailwindcss";
 
 export default {
   darkMode: ["class"],
-  content: ["./client/index.html", "./client/src/**/*.{js,jsx,ts,tsx}"],
+  content: ["./index.html", "./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
       borderRadius: {
         lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        md: "calc(var(--radius) - 3px)",
+        sm: "calc(var(--radius) - 6px)",
       },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-        card: {
-          DEFAULT: "var(--card)",
-          foreground: "var(--card-foreground)",
-        },
-        popover: {
-          DEFAULT: "var(--popover)",
-          foreground: "var(--popover-foreground)",
-        },
-        primary: {
-          DEFAULT: "var(--primary)",
-          foreground: "var(--primary-foreground)",
-        },
-        secondary: {
-          DEFAULT: "var(--secondary)",
-          foreground: "var(--secondary-foreground)",
-        },
-        muted: {
-          DEFAULT: "var(--muted)",
-          foreground: "var(--muted-foreground)",
-        },
-        accent: {
-          DEFAULT: "var(--accent)",
-          foreground: "var(--accent-foreground)",
-        },
-        destructive: {
-          DEFAULT: "var(--destructive)",
-          foreground: "var(--destructive-foreground)",
-        },
+        card: { DEFAULT: "var(--card)", foreground: "var(--card-foreground)" },
+        popover: { DEFAULT: "var(--popover)", foreground: "var(--popover-foreground)" },
+        primary: { DEFAULT: "var(--primary)", foreground: "var(--primary-foreground)" },
+        secondary: { DEFAULT: "var(--secondary)", foreground: "var(--secondary-foreground)" },
+        muted: { DEFAULT: "var(--muted)", foreground: "var(--muted-foreground)" },
+        accent: { DEFAULT: "var(--accent)", foreground: "var(--accent-foreground)" },
+        destructive: { DEFAULT: "var(--destructive)", foreground: "var(--destructive-foreground)" },
         border: "var(--border)",
         input: "var(--input)",
         ring: "var(--ring)",
-        chart: {
-          "1": "var(--chart-1)",
-          "2": "var(--chart-2)",
-          "3": "var(--chart-3)",
-          "4": "var(--chart-4)",
-          "5": "var(--chart-5)",
-        },
-        sidebar: {
-          DEFAULT: "var(--sidebar-background)",
-          foreground: "var(--sidebar-foreground)",
-          primary: "var(--sidebar-primary)",
-          "primary-foreground": "var(--sidebar-primary-foreground)",
-          accent: "var(--sidebar-accent)",
-          "accent-foreground": "var(--sidebar-accent-foreground)",
-          border: "var(--sidebar-border)",
-          ring: "var(--sidebar-ring)",
-        },
-        ocean: {
-          50: "var(--ocean-50)",
-          500: "var(--ocean-500)",
-          600: "var(--ocean-600)",
-          700: "var(--ocean-700)",
-          900: "var(--ocean-900)",
-        },
-        sage: {
-          50: "var(--sage-50)",
-          100: "var(--sage-100)",
-          500: "var(--sage-500)",
-          600: "var(--sage-600)",
-          700: "var(--sage-700)",
-          900: "var(--sage-900)",
-        },
-        amber: {
-          50: "var(--amber-50)",
-          100: "var(--amber-100)",
-          500: "var(--amber-500)",
-          600: "var(--amber-600)",
-          700: "var(--amber-700)",
-          900: "var(--amber-900)",
-        },
-        lavender: {
-          50: "var(--lavender-50)",
-          100: "var(--lavender-100)",
-          500: "var(--lavender-500)",
-          600: "var(--lavender-600)",
-          700: "var(--lavender-700)",
-          900: "var(--lavender-900)",
-        },
-        emerald: {
-          500: "var(--emerald-500)",
-          600: "var(--emerald-600)",
-        },
+        coral: { 50: "#FFF3EF", 100: "#FFE1D6", 300: "#FFAF94", 500: "#FF6B4A", 600: "#E8532F", 700: "#C23F20", 900: "#6B2010" },
+        amber: { 50: "#FFF8E8", 100: "#FFECBC", 300: "#FFD066", 500: "#F5A623", 600: "#D6870F", 700: "#A8650A", 900: "#5C3705" },
+        teal: { 50: "#EEFBF8", 100: "#CDF3EA", 300: "#7EDBC7", 500: "#1D9A85", 600: "#157E6C", 700: "#0F6255", 900: "#093732" },
+        violet: { 50: "#F5F0FF", 100: "#E4D6FF", 300: "#B896F5", 500: "#8358D6", 600: "#6A3FBD", 700: "#522F94", 900: "#2D1A54" },
       },
       fontFamily: {
-        sans: ["var(--font-sans)"],
-        serif: ["var(--font-serif)"],
-        mono: ["var(--font-mono)"],
-        playfair: ["var(--font-serif)"],
+        display: ["Fraunces", "serif"],
+        sans: ["Inter", "sans-serif"],
+        mono: ["Space Grotesk", "monospace"],
+      },
+      keyframes: {
+        "accordion-down": { from: { height: "0" }, to: { height: "var(--radix-accordion-content-height)" } },
+        "accordion-up": { from: { height: "var(--radix-accordion-content-height)" }, to: { height: "0" } },
+        "trail-draw": { from: { strokeDashoffset: "1400" }, to: { strokeDashoffset: "0" } },
+        "rise": { from: { opacity: "0", transform: "translateY(16px)" }, to: { opacity: "1", transform: "translateY(0)" } },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "float": "float 6s ease-in-out infinite",
-        "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-        "gradient": "gradient 8s ease infinite",
-      },
-      keyframes: {
-        "accordion-down": {
-          from: {
-            height: "0",
-          },
-          to: {
-            height: "var(--radix-accordion-content-height)",
-          },
-        },
-        "accordion-up": {
-          from: {
-            height: "var(--radix-accordion-content-height)",
-          },
-          to: {
-            height: "0",
-          },
-        },
-        float: {
-          "0%, 100%": { transform: "translateY(0px)" },
-          "50%": { transform: "translateY(-10px)" },
-        },
-        gradient: {
-          "0%, 100%": { backgroundPosition: "0% 50%" },
-          "50%": { backgroundPosition: "100% 50%" },
-        },
-      },
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "nature-pattern": "linear-gradient(135deg, var(--sage-500) 0%, var(--emerald-600) 100%)",
+        "trail-draw": "trail-draw 2.4s ease-out forwards",
+        "rise": "rise 0.6s cubic-bezier(0.16,1,0.3,1) forwards",
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
+  plugins: [require("tailwindcss-animate")],
 } satisfies Config;

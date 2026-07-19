@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #FFFBF6;
+  --foreground: #2A1F1A;
+  --card: #FFFFFF;
+  --card-foreground: #2A1F1A;
+  --popover: #FFFFFF;
+  --popover-foreground: #2A1F1A;
+  --primary: #FF6B4A;
+  --primary-foreground: #FFFBF6;
+  --secondary: #F5A623;
+  --secondary-foreground: #2A1F1A;
+  --muted: #F5EDE3;
+  --muted-foreground: #7A6A5C;
+  --accent: #8358D6;
+  --accent-foreground: #FFFBF6;
+  --destructive: #D64545;
+  --destructive-foreground: #FFFBF6;
+  --border: #EBE0D2;
+  --input: #EBE0D2;
+  --ring: #FF6B4A;
+  --radius: 1rem;
+}
+
+.dark {
+  --background: #1A1310;
+  --foreground: #FBF2E9;
+  --card: #241B16;
+  --card-foreground: #FBF2E9;
+  --popover: #241B16;
+  --popover-foreground: #FBF2E9;
+  --primary: #FF8A6B;
+  --primary-foreground: #1A1310;
+  --secondary: #F5A623;
+  --secondary-foreground: #1A1310;
+  --muted: #2E241E;
+  --muted-foreground: #B3A292;
+  --accent: #A67FE8;
+  --accent-foreground: #1A1310;
+  --destructive: #E86A6A;
+  --destructive-foreground: #1A1310;
+  --border: #362A22;
+  --input: #362A22;
+  --ring: #FF8A6B;
+}
+
+* { border-color: var(--border); }
+body { background: var(--background); color: var(--foreground); font-family: "Inter", sans-serif; }
+h1, h2, h3, h4 { font-family: "Fraunces", serif; }
+.font-display { font-family: "Fraunces", serif; }
+.font-mono { font-family: "Space Grotesk", monospace; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
