@@ -1,4 +1,4 @@
-# Yogo
+# CaptureItLive
 
 A community platform connecting yoga instructors and students worldwide — built to network positive energy through shared practice.
 

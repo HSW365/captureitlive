@@ -1,16 +1,32 @@
+import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { useParams } from "wouter";
+import { useParams, useLocation } from "wouter";
 import { supabase, Profile, YogaClass } from "@/lib/supabase";
 import { useAuth } from "@/lib/auth-context";
+import { findOrCreateConversation } from "@/lib/messaging";
 import { Avatar } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { MessageCircle } from "lucide-react";
 import { format } from "date-fns";
 
 export default function InstructorProfile() {
   const { id } = useParams<{ id: string }>();
   const { user } = useAuth();
   const qc = useQueryClient();
+  const [, setLocation] = useLocation();
+  const [messaging, setMessaging] = useState(false);
+
+  async function startConversation() {
+    if (!user || !id) return;
+    setMessaging(true);
+    try {
+      const conversationId = await findOrCreateConversation(user.id, id);
+      setLocation(`/messages/${conversationId}`);
+    } finally {
+      setMessaging(false);
+    }
+  }
 
   const { data: profile } = useQuery({
     queryKey: ["profile", id],
@@ -65,9 +81,14 @@ export default function InstructorProfile() {
           {profile.location && <p className="text-xs text-muted-foreground mt-1">{profile.location}</p>}
         </div>
         {user && user.id !== profile.id && (
-          <Button variant={isFollowing ? "outline" : "primary"} size="sm" onClick={() => toggleFollow.mutate()}>
-            {isFollowing ? "Following" : "Follow"}
-          </Button>
+          <div className="flex items-center gap-2 shrink-0">
+            <Button variant="outline" size="sm" onClick={startConversation} disabled={messaging}>
+              <MessageCircle size={16} /> Message
+            </Button>
+            <Button variant={isFollowing ? "outline" : "primary"} size="sm" onClick={() => toggleFollow.mutate()}>
+              {isFollowing ? "Following" : "Follow"}
+            </Button>
+          </div>
         )}
       </div>
 

@@ -3,12 +3,13 @@ import { useAuth } from "@/lib/auth-context";
 import { Avatar } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, MessageCircle } from "lucide-react";
 
 const links = [
   { href: "/community", label: "Community" },
   { href: "/instructors", label: "Instructors" },
   { href: "/classes", label: "Classes" },
+  { href: "/learn", label: "Learn" },
   { href: "/pricing", label: "Pricing" },
 ];
 
@@ -18,10 +19,10 @@ export function Nav() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 bg-background/85 backdrop-blur-md border-b border-border">
+    <header className="sticky top-0 z-50 glass-surface border-b border-border">
       <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
         <Link href="/" className="font-display text-2xl font-semibold tracking-tight text-foreground">
-          Yogo
+          CaptureItLive
         </Link>
 
         <nav className="hidden md:flex items-center gap-8">
@@ -41,6 +42,9 @@ export function Nav() {
         <div className="hidden md:flex items-center gap-3">
           {user && profile ? (
             <>
+              <Link href="/messages" className="p-2 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors" aria-label="Messages">
+                <MessageCircle size={20} />
+              </Link>
               <Link href="/dashboard" className="flex items-center gap-2">
                 <Avatar name={profile.full_name} src={profile.avatar_url} className="w-9 h-9 text-xs" />
               </Link>
@@ -49,7 +53,7 @@ export function Nav() {
           ) : (
             <>
               <Link href="/login"><Button variant="ghost" size="sm">Log in</Button></Link>
-              <Link href="/pricing"><Button size="sm">Join Yogo</Button></Link>
+              <Link href="/pricing"><Button size="sm">Join CaptureItLive</Button></Link>
             </>
           )}
         </div>
@@ -68,13 +72,14 @@ export function Nav() {
           ))}
           {user && profile ? (
             <>
+              <Link href="/messages" onClick={() => setOpen(false)} className="text-sm font-medium">Messages</Link>
               <Link href="/dashboard" onClick={() => setOpen(false)} className="text-sm font-medium">Dashboard</Link>
               <Button variant="outline" size="sm" onClick={() => signOut()}>Sign out</Button>
             </>
           ) : (
             <>
               <Link href="/login" onClick={() => setOpen(false)} className="text-sm font-medium">Log in</Link>
-              <Link href="/pricing" onClick={() => setOpen(false)}><Button size="sm" className="w-full">Join Yogo</Button></Link>
+              <Link href="/pricing" onClick={() => setOpen(false)}><Button size="sm" className="w-full">Join CaptureItLive</Button></Link>
             </>
           )}
         </div>

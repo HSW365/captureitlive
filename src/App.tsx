@@ -14,6 +14,8 @@ import InstructorProfile from "@/pages/instructor-profile";
 import Classes from "@/pages/classes";
 import Pricing from "@/pages/pricing";
 import ClassDetail from "@/pages/class-detail";
+import Learn from "@/pages/learn";
+import Messages from "@/pages/messages";
 import Dashboard from "@/pages/dashboard";
 import ProfileEdit from "@/pages/profile-edit";
 import Privacy from "@/pages/privacy";
@@ -37,6 +39,9 @@ export default function App() {
             <Route path="/classes" component={Classes} />
             <Route path="/classes/:id" component={ClassDetail} />
             <Route path="/pricing" component={Pricing} />
+            <Route path="/learn" component={Learn} />
+            <Route path="/messages">{() => <ProtectedRoute><Messages /></ProtectedRoute>}</Route>
+            <Route path="/messages/:id">{() => <ProtectedRoute><Messages /></ProtectedRoute>}</Route>
             <Route path="/dashboard">{() => <ProtectedRoute><Dashboard /></ProtectedRoute>}</Route>
             <Route path="/profile/edit">{() => <ProtectedRoute><ProfileEdit /></ProtectedRoute>}</Route>
             <Route path="/privacy" component={Privacy} />

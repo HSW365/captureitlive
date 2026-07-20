@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { STRIPE_PAYMENT_LINK } from "@/lib/config";
 
 export default function Onboarding() {
   const { profile, refreshProfile } = useAuth();
@@ -22,7 +23,11 @@ export default function Onboarding() {
     await supabase.from("yogo_profiles").update({ headline, bio, location }).eq("id", profile.id);
     await refreshProfile();
     setSaving(false);
-    setLocation("/community");
+    if (STRIPE_PAYMENT_LINK) {
+      window.location.href = `${STRIPE_PAYMENT_LINK}?client_reference_id=${profile.id}`;
+    } else {
+      setLocation("/community");
+    }
   }
 
   return (
@@ -45,7 +50,7 @@ export default function Onboarding() {
           <Label htmlFor="bio">A little about you</Label>
           <Textarea id="bio" rows={4} value={bio} onChange={(e) => setBio(e.target.value)} placeholder="Share what brought you to yoga…" />
         </div>
-        <Button type="submit" className="w-full" disabled={saving}>{saving ? "Saving…" : "Enter Yogo"}</Button>
+        <Button type="submit" className="w-full" disabled={saving}>{saving ? "Saving…" : "Enter CaptureItLive"}</Button>
       </form>
     </div>
   );

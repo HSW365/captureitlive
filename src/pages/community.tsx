@@ -129,7 +129,7 @@ export default function Community() {
   return (
     <div className="max-w-2xl mx-auto px-6 py-16">
       <h1 className="font-display text-3xl font-medium mb-1">Community</h1>
-      <p className="text-muted-foreground mb-8">Reflections and energy from the Yogo community.</p>
+      <p className="text-muted-foreground mb-8">Reflections and energy from the CaptureItLive community.</p>
       <Composer onPosted={refetch} />
       {isLoading && <p className="text-muted-foreground text-sm">Loading the feed…</p>}
       {!isLoading && posts?.length === 0 && (
