@@ -40,6 +40,14 @@ export function Nav() {
         <div className="hidden md:flex items-center gap-3">
           {user && profile ? (
             <>
+              <Link
+                href="/messages"
+                className={`text-sm font-medium transition-colors ${
+                  location.startsWith("/messages") ? "text-coral-600" : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                Messages
+              </Link>
               <Link href="/dashboard" className="flex items-center gap-2">
                 <Avatar name={profile.full_name} src={profile.avatar_url} className="w-9 h-9 text-xs" />
               </Link>
@@ -67,6 +75,7 @@ export function Nav() {
           ))}
           {user && profile ? (
             <>
+              <Link href="/messages" onClick={() => setOpen(false)} className="text-sm font-medium">Messages</Link>
               <Link href="/dashboard" onClick={() => setOpen(false)} className="text-sm font-medium">Dashboard</Link>
               <Button variant="outline" size="sm" onClick={() => signOut()}>Sign out</Button>
             </>
