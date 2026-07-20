@@ -5,7 +5,7 @@ export function Footer() {
     <footer className="border-t border-border mt-24">
       <div className="max-w-6xl mx-auto px-6 py-12 flex flex-col md:flex-row items-center justify-between gap-6">
         <div>
-          <div className="font-display text-xl font-semibold">Yogo</div>
+          <div className="font-display text-xl font-semibold">CaptureItLive</div>
           <p className="text-sm text-muted-foreground mt-1">Connecting instructors and students, worldwide.</p>
         </div>
         <div className="flex gap-8 text-sm text-muted-foreground">

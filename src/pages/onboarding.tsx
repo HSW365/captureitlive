@@ -45,7 +45,7 @@ export default function Onboarding() {
           <Label htmlFor="bio">A little about you</Label>
           <Textarea id="bio" rows={4} value={bio} onChange={(e) => setBio(e.target.value)} placeholder="Share what brought you to yoga…" />
         </div>
-        <Button type="submit" className="w-full" disabled={saving}>{saving ? "Saving…" : "Enter Yogo"}</Button>
+        <Button type="submit" className="w-full" disabled={saving}>{saving ? "Saving…" : "Enter CaptureItLive"}</Button>
       </form>
     </div>
   );

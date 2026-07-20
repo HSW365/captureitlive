@@ -20,7 +20,7 @@ export function Nav() {
     <header className="sticky top-0 z-50 bg-background/85 backdrop-blur-md border-b border-border">
       <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
         <Link href="/" className="font-display text-2xl font-semibold tracking-tight text-foreground">
-          Yogo
+          CaptureItLive
         </Link>
 
         <nav className="hidden md:flex items-center gap-8">
@@ -48,7 +48,7 @@ export function Nav() {
           ) : (
             <>
               <Link href="/login"><Button variant="ghost" size="sm">Log in</Button></Link>
-              <Link href="/signup"><Button size="sm">Join Yogo</Button></Link>
+              <Link href="/signup"><Button size="sm">Join CaptureItLive</Button></Link>
             </>
           )}
         </div>
@@ -73,7 +73,7 @@ export function Nav() {
           ) : (
             <>
               <Link href="/login" onClick={() => setOpen(false)} className="text-sm font-medium">Log in</Link>
-              <Link href="/signup" onClick={() => setOpen(false)}><Button size="sm" className="w-full">Join Yogo</Button></Link>
+              <Link href="/signup" onClick={() => setOpen(false)}><Button size="sm" className="w-full">Join CaptureItLive</Button></Link>
             </>
           )}
         </div>

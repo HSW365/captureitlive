@@ -25,11 +25,11 @@ export default function Landing() {
             <span className="italic text-coral-600">Belong.</span>
           </h1>
           <p className="mt-6 text-lg text-muted-foreground max-w-md">
-            Yogo brings yoga instructors and students together, worldwide — to build real community
+            CaptureItLive brings yoga instructors and students together, worldwide — to build real community
             through shared practice and positive energy.
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
-            <Link href="/signup"><Button size="lg">Join Yogo, it's free</Button></Link>
+            <Link href="/signup"><Button size="lg">Join CaptureItLive, it's free</Button></Link>
             <Link href="/community"><Button size="lg" variant="outline">Explore the community</Button></Link>
           </div>
         </div>
@@ -46,7 +46,7 @@ export default function Landing() {
             </h2>
             <p className="text-muted-foreground max-w-lg mb-16">
               The ribbon beside these features traces one continuous line, the same way one class,
-              one post, one conversation on Yogo tends to lead into the next.
+              one post, one conversation on CaptureItLive tends to lead into the next.
             </p>
             <div className="grid sm:grid-cols-2 gap-x-10 gap-y-14">
               {features.map(({ icon: Icon, title, body }) => (
@@ -67,7 +67,7 @@ export default function Landing() {
           Your practice is better with people in it.
         </h2>
         <p className="text-muted-foreground mb-8 max-w-lg mx-auto">
-          Whether you teach or you're finding your way onto the mat, Yogo is where that happens next.
+          Whether you teach or you're finding your way onto the mat, CaptureItLive is where that happens next.
         </p>
         <Link href="/signup"><Button size="lg">Get started</Button></Link>
       </section>

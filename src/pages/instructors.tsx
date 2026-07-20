@@ -16,7 +16,7 @@ export default function Instructors() {
   return (
     <div className="max-w-6xl mx-auto px-6 py-16">
       <h1 className="font-display text-3xl font-medium mb-1">Instructors</h1>
-      <p className="text-muted-foreground mb-10">Teachers building community on Yogo, worldwide.</p>
+      <p className="text-muted-foreground mb-10">Teachers building community on CaptureItLive, worldwide.</p>
 
       {isLoading && <p className="text-muted-foreground text-sm">Loading instructors…</p>}
       {!isLoading && data?.length === 0 && (

@@ -27,7 +27,7 @@ export default function SignUp() {
 
   return (
     <div className="max-w-md mx-auto px-6 py-20">
-      <h1 className="font-display text-3xl font-medium mb-2">Join Yogo</h1>
+      <h1 className="font-display text-3xl font-medium mb-2">Join CaptureItLive</h1>
       <p className="text-muted-foreground mb-8">Bring your practice, and your people, together.</p>
       <form onSubmit={onSubmit} className="space-y-5">
         <div>
@@ -63,7 +63,7 @@ export default function SignUp() {
         <Button type="submit" className="w-full" disabled={loading}>{loading ? "Creating account…" : "Create account"}</Button>
       </form>
       <p className="text-sm text-muted-foreground mt-6 text-center">
-        Already on Yogo? <Link href="/login" className="text-coral-600 font-medium">Log in</Link>
+        Already on CaptureItLive? <Link href="/login" className="text-coral-600 font-medium">Log in</Link>
       </p>
     </div>
   );

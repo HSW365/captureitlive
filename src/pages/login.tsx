@@ -40,7 +40,7 @@ export default function Login() {
         <Button type="submit" className="w-full" disabled={loading}>{loading ? "Logging in…" : "Log in"}</Button>
       </form>
       <p className="text-sm text-muted-foreground mt-6 text-center">
-        New to Yogo? <Link href="/signup" className="text-coral-600 font-medium">Create an account</Link>
+        New to CaptureItLive? <Link href="/signup" className="text-coral-600 font-medium">Create an account</Link>
       </p>
     </div>
   );
