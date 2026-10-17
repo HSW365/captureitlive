@@ -6,10 +6,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { STRIPE_PAYMENT_LINK } from "@/lib/config";
 
 export default function Onboarding() {
-  const { profile, refreshProfile } = useAuth();
+  const { profile, refreshProfile, isMember } = useAuth();
   const [, setLocation] = useLocation();
   const [headline, setHeadline] = useState("");
   const [bio, setBio] = useState("");
@@ -23,11 +22,7 @@ export default function Onboarding() {
     await supabase.from("yogo_profiles").update({ headline, bio, location }).eq("id", profile.id);
     await refreshProfile();
     setSaving(false);
-    if (STRIPE_PAYMENT_LINK) {
-      window.location.href = `${STRIPE_PAYMENT_LINK}?client_reference_id=${profile.id}`;
-    } else {
-      setLocation("/community");
-    }
+    setLocation(isMember ? "/community" : "/pricing");
   }
 
   return (

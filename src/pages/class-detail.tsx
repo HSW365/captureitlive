@@ -10,7 +10,7 @@ import { Link } from "wouter";
 
 export default function ClassDetail() {
   const { id } = useParams<{ id: string }>();
-  const { user, profile } = useAuth();
+  const { user, profile, requireMember } = useAuth();
   const qc = useQueryClient();
 
   const { data: cls } = useQuery({
@@ -43,6 +43,7 @@ export default function ClassDetail() {
   const toggleRsvp = useMutation({
     mutationFn: async () => {
       if (!user || !id) return;
+      if (!myRsvp && !requireMember()) return;
       if (myRsvp) {
         await supabase.from("yogo_class_rsvps").delete().eq("class_id", id).eq("student_id", user.id);
       } else {

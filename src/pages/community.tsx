@@ -40,13 +40,14 @@ async function fetchFeed(userId: string | undefined): Promise<Post[]> {
 }
 
 function Composer({ onPosted }: { onPosted: () => void }) {
-  const { profile } = useAuth();
+  const { profile, requireMember } = useAuth();
   const [content, setContent] = useState("");
   const [tag, setTag] = useState<string | null>(null);
   const [posting, setPosting] = useState(false);
 
   async function submit() {
     if (!profile || !content.trim()) return;
+    if (!requireMember()) return;
     setPosting(true);
     await supabase.from("yogo_posts").insert({ author_id: profile.id, content: content.trim(), energy_tag: tag });
     setContent("");
@@ -86,12 +87,13 @@ function Composer({ onPosted }: { onPosted: () => void }) {
 }
 
 function PostCard({ post }: { post: Post }) {
-  const { user } = useAuth();
+  const { user, requireMember } = useAuth();
   const qc = useQueryClient();
 
   const toggleLike = useMutation({
     mutationFn: async () => {
       if (!user) return;
+      if (!post.liked_by_me && !requireMember()) return;
       if (post.liked_by_me) {
         await supabase.from("yogo_post_likes").delete().eq("post_id", post.id).eq("user_id", user.id);
       } else {

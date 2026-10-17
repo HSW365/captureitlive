@@ -20,6 +20,8 @@ export interface Profile {
   energy_points: number;
   created_at: string;
   updated_at: string;
+  member_until?: string | null;
+  subscription_status?: string | null;
 }
 
 export interface Post {

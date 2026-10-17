@@ -12,7 +12,7 @@ import { format } from "date-fns";
 
 export default function InstructorProfile() {
   const { id } = useParams<{ id: string }>();
-  const { user } = useAuth();
+  const { user, requireMember } = useAuth();
   const qc = useQueryClient();
   const [, setLocation] = useLocation();
   const [messaging, setMessaging] = useState(false);
@@ -60,6 +60,7 @@ export default function InstructorProfile() {
   const toggleFollow = useMutation({
     mutationFn: async () => {
       if (!user || !id) return;
+      if (!isFollowing && !requireMember()) return;
       if (isFollowing) {
         await supabase.from("yogo_follows").delete().eq("follower_id", user.id).eq("following_id", id);
       } else {

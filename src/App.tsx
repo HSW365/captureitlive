@@ -2,7 +2,8 @@ import { Router, Switch, Route } from "wouter";
 import { useHashLocation } from "wouter/use-hash-location";
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
-import { ProtectedRoute } from "@/components/protected-route";
+import { ProtectedRoute, MemberRoute } from "@/components/protected-route";
+import { MembershipBar } from "@/components/membership-bar";
 
 import Landing from "@/pages/landing";
 import Login from "@/pages/login";
@@ -27,6 +28,7 @@ export default function App() {
     <Router hook={useHashLocation}>
       <div className="min-h-screen flex flex-col">
         <Nav />
+        <MembershipBar />
         <main className="flex-1">
           <Switch>
             <Route path="/" component={Landing} />
@@ -40,9 +42,9 @@ export default function App() {
             <Route path="/classes/:id" component={ClassDetail} />
             <Route path="/pricing" component={Pricing} />
             <Route path="/learn" component={Learn} />
-            <Route path="/messages">{() => <ProtectedRoute><Messages /></ProtectedRoute>}</Route>
-            <Route path="/messages/:id">{() => <ProtectedRoute><Messages /></ProtectedRoute>}</Route>
-            <Route path="/dashboard">{() => <ProtectedRoute><Dashboard /></ProtectedRoute>}</Route>
+            <Route path="/messages">{() => <MemberRoute><Messages /></MemberRoute>}</Route>
+            <Route path="/messages/:id">{() => <MemberRoute><Messages /></MemberRoute>}</Route>
+            <Route path="/dashboard">{() => <MemberRoute><Dashboard /></MemberRoute>}</Route>
             <Route path="/profile/edit">{() => <ProtectedRoute><ProfileEdit /></ProtectedRoute>}</Route>
             <Route path="/privacy" component={Privacy} />
             <Route path="/terms" component={Terms} />
