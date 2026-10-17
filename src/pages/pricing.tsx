@@ -3,10 +3,10 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Check, CreditCard, Smartphone, Landmark, ArrowUpRight } from "lucide-react";
+import { Check, Smartphone, Landmark, ArrowUpRight } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
 import { supabase } from "@/lib/supabase";
-import { MEMBERSHIP_PRICE, CARD_CHECKOUT_URL, CASHAPP_URL, CASHAPP_TAG, ZELLE_TO, SUPPORT_EMAIL } from "@/lib/config";
+import { MEMBERSHIP_PRICE, CASHAPP_URL, CASHAPP_TAG, ZELLE_TO, SUPPORT_EMAIL } from "@/lib/config";
 
 const features = [
   "Full community feed — post, comment, connect",
@@ -18,7 +18,7 @@ const features = [
   "Ad-free, always",
 ];
 
-type Method = "card" | "cashapp" | "zelle";
+type Method = "cashapp" | "zelle";
 
 function fmt(d: string | null | undefined) {
   return d ? new Date(d).toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" }) : "";
@@ -26,7 +26,7 @@ function fmt(d: string | null | undefined) {
 
 function PayPanel() {
   const { profile, membership, refreshMembership } = useAuth();
-  const [method, setMethod] = useState<Method>("card");
+  const [method, setMethod] = useState<Method>("cashapp");
   const [reference, setReference] = useState("");
   const [error, setError] = useState("");
   const [sending, setSending] = useState(false);
@@ -35,7 +35,7 @@ function PayPanel() {
     e.preventDefault();
     setError("");
     if (reference.trim().length < 2) {
-      setError("Add your order number, $cashtag or Zelle name so we can match your payment.");
+      setError("Add your $cashtag or Zelle name so we can match your payment.");
       return;
     }
     setSending(true);
@@ -60,7 +60,6 @@ function PayPanel() {
 
   const name = profile?.full_name || "your name";
   const options: { key: Method; icon: JSX.Element; title: string; note: string; href?: string }[] = [
-    { key: "card", icon: <CreditCard className="w-5 h-5" />, title: "Card, Apple Pay or Google Pay", note: "Secure checkout at hsw365.co", href: CARD_CHECKOUT_URL },
     { key: "cashapp", icon: <Smartphone className="w-5 h-5" />, title: "Cash App", note: `${CASHAPP_TAG} · put ${name} in the note`, href: CASHAPP_URL },
     { key: "zelle", icon: <Landmark className="w-5 h-5" />, title: "Zelle", note: `${ZELLE_TO} · put ${name} in the memo` },
   ];
@@ -91,15 +90,15 @@ function PayPanel() {
       <form onSubmit={claim}>
         <p className="text-xs font-mono tracking-widest uppercase text-muted-foreground mb-3">2 · Tell us you paid</p>
         <div className="flex gap-2 mb-3">
-          {(["card", "cashapp", "zelle"] as Method[]).map((m) => (
+          {(["cashapp", "zelle"] as Method[]).map((m) => (
             <button key={m} type="button" onClick={() => setMethod(m)}
               className={`flex-1 h-9 rounded-full text-xs font-medium border transition ${method === m ? "bg-foreground text-background border-foreground" : "border-border text-muted-foreground"}`}>
-              {m === "card" ? "Card" : m === "cashapp" ? "Cash App" : "Zelle"}
+              {m === "cashapp" ? "Cash App" : "Zelle"}
             </button>
           ))}
         </div>
         <Input value={reference} onChange={(e) => setReference(e.target.value)} maxLength={120}
-          placeholder={method === "card" ? "Order number from your receipt" : method === "cashapp" ? "Your $cashtag" : "Name on your Zelle"} />
+          placeholder={method === "cashapp" ? "Your $cashtag" : "Name on your Zelle"} />
         {error && <p className="text-sm text-coral-600 mt-2">{error}</p>}
         <Button size="lg" className="w-full mt-4" disabled={sending}>{sending ? "Sending…" : "I've paid — activate my membership"}</Button>
         <p className="text-xs text-muted-foreground mt-3">You get full access right away while we confirm, usually the same day.</p>
