@@ -3,26 +3,26 @@
 @tailwind utilities;
 
 :root {
-  --background: #FFFBF6;
-  --foreground: #2A1F1A;
+  --background: #EDF0EB;
+  --foreground: #121A14;
   --card: #FFFFFF;
-  --card-foreground: #2A1F1A;
+  --card-foreground: #121A14;
   --popover: #FFFFFF;
-  --popover-foreground: #2A1F1A;
-  --primary: #FF6B4A;
-  --primary-foreground: #FFFBF6;
+  --popover-foreground: #121A14;
+  --primary: #E8532F;
+  --primary-foreground: #FFFFFF;
   --secondary: #F5A623;
-  --secondary-foreground: #2A1F1A;
-  --muted: #F5EDE3;
-  --muted-foreground: #7A6A5C;
-  --accent: #8358D6;
-  --accent-foreground: #FFFBF6;
-  --destructive: #D64545;
-  --destructive-foreground: #FFFBF6;
-  --border: #EBE0D2;
-  --input: #EBE0D2;
-  --ring: #FF6B4A;
-  --radius: 1rem;
+  --secondary-foreground: #121A14;
+  --muted: #E0E5DE;
+  --muted-foreground: #56625A;
+  --accent: #26402F;
+  --accent-foreground: #FFFFFF;
+  --destructive: #C93A3A;
+  --destructive-foreground: #FFFFFF;
+  --border: #D1D8CE;
+  --input: #C9D1C6;
+  --ring: #E8532F;
+  --radius: 0.875rem;
 }
 
 .dark {
@@ -51,12 +51,14 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: "Inter", sans-serif;
+  font-family: "Bricolage Grotesque", system-ui, sans-serif;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
   position: relative;
 }
-h1, h2, h3, h4 { font-family: "Fraunces", serif; }
-.font-display { font-family: "Fraunces", serif; }
-.font-mono { font-family: "Space Grotesk", monospace; }
+h1, h2, h3, h4 { font-family: "Bricolage Grotesque", system-ui, sans-serif; letter-spacing: -0.025em; }
+.font-display { font-family: "Bricolage Grotesque", system-ui, sans-serif; letter-spacing: -0.025em; }
+.font-mono { font-family: "Bricolage Grotesque", system-ui, sans-serif; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -109,7 +111,7 @@ body::before {
 
 /* Layered, tactile shadow tokens — softer and warmer than default box-shadow black */
 :root {
-  --shadow-color: 20 25% 20%;
+  --shadow-color: 140 20% 12%;
   --shadow-soft: 0 1px 2px hsl(var(--shadow-color) / 0.04), 0 8px 24px -8px hsl(var(--shadow-color) / 0.10);
   --shadow-lifted: 0 2px 4px hsl(var(--shadow-color) / 0.06), 0 16px 40px -12px hsl(var(--shadow-color) / 0.16);
   --shadow-glow: 0 0 0 1px color-mix(in srgb, var(--primary) 14%, transparent), 0 12px 32px -10px color-mix(in srgb, var(--primary) 35%, transparent);

@@ -8,7 +8,7 @@ export function Footer() {
           <div className="font-display text-xl font-semibold">CaptureItLive</div>
           <p className="text-sm text-muted-foreground mt-1">Connecting instructors and students, worldwide.</p>
         </div>
-        <div className="flex gap-8 text-sm text-muted-foreground">
+        <div className="flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm text-muted-foreground">
           <Link href="/community" className="hover:text-foreground">Community</Link>
           <Link href="/instructors" className="hover:text-foreground">Instructors</Link>
           <Link href="/classes" className="hover:text-foreground">Classes</Link>
