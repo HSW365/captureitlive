@@ -61,18 +61,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return () => listener.subscription.unsubscribe();
   }, []);
 
+  // One step: the account is created confirmed server-side (no confirmation email), then signed in.
   async function signUp(email: string, password: string, fullName: string, role: "instructor" | "student") {
-    const { data, error } = await supabase.auth.signUp({ email, password });
-    if (error) return { error: error.message };
-    if (data.user) {
-      const { error: profileError } = await supabase.from("yogo_profiles").insert({
-        id: data.user.id,
-        role,
-        full_name: fullName,
-      });
-      if (profileError) return { error: profileError.message };
-      await loadProfile(data.user.id);
-    }
+    const r = await fetch("https://ucgymjcenpddqshokybj.supabase.co/functions/v1/yogo-signup", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ email, password, fullName, role }),
+    });
+    const j = await r.json().catch(() => ({}));
+    if (j.error) return { error: j.error as string };
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) return { error: j.exists ? "That email already has an account. Log in instead." : error.message };
+    if (data.user) await loadProfile(data.user.id);
+    await loadMembership();
     return { error: null };
   }
 

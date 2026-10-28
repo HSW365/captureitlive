@@ -1,4 +1,5 @@
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { MEMBERSHIP_PRICE } from "@/lib/config";
 
@@ -14,6 +15,13 @@ const included = [
 ];
 
 export default function Landing() {
+  const [, setLocation] = useLocation();
+  // Ad QR / sign-up links (?signup or #signup): show the app a moment, then open sign-up + membership in one step.
+  useEffect(() => {
+    if (!/[?&]signup/.test(location.search) && !/^#(signup|join)$/.test(location.hash)) return;
+    const t = setTimeout(() => setLocation("/signup"), 900);
+    return () => clearTimeout(t);
+  }, [setLocation]);
   return (
     <div>
       {/* Hero: one real class, full frame */}
