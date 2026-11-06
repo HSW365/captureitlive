@@ -11,6 +11,7 @@ const links = [
   { href: "/classes", label: "Classes" },
   { href: "/learn", label: "Learn" },
   { href: "/academy", label: "Academy" },
+  { href: "/nil", label: "NIL365" },
   { href: "/pricing", label: "Pricing" },
 ];
 
