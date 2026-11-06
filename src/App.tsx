@@ -1,4 +1,5 @@
-import { Router, Switch, Route } from "wouter";
+import { useEffect } from "react";
+import { Router, Switch, Route, useLocation } from "wouter";
 import { useHashLocation } from "wouter/use-hash-location";
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
@@ -22,13 +23,21 @@ import ProfileEdit from "@/pages/profile-edit";
 import Privacy from "@/pages/privacy";
 import Terms from "@/pages/terms";
 import NotFound from "@/pages/not-found";
+import Academy from "@/pages/academy";
+import AcademySport from "@/pages/academy-sport";
+import LessonPage from "@/pages/lesson";
+import Train from "@/pages/train";
+import Start from "@/pages/start";
 
-export default function App() {
+function Shell() {
+  const [loc] = useLocation();
+  const arena = loc === "/start" || loc === "/train" || loc.startsWith("/academy") || loc.startsWith("/lesson");
+  const bare = loc === "/start";
+  useEffect(() => { document.documentElement.classList.toggle("arena-root", arena); }, [arena]);
   return (
-    <Router hook={useHashLocation}>
       <div className="min-h-screen flex flex-col">
-        <Nav />
-        <MembershipBar />
+        {!bare && <Nav />}
+        {!bare && <MembershipBar />}
         <main className="flex-1">
           <Switch>
             <Route path="/" component={Landing} />
@@ -46,13 +55,25 @@ export default function App() {
             <Route path="/messages/:id">{() => <MemberRoute><Messages /></MemberRoute>}</Route>
             <Route path="/dashboard">{() => <MemberRoute><Dashboard /></MemberRoute>}</Route>
             <Route path="/profile/edit">{() => <ProtectedRoute><ProfileEdit /></ProtectedRoute>}</Route>
+            <Route path="/academy" component={Academy} />
+            <Route path="/academy/:sport" component={AcademySport} />
+            <Route path="/lesson/:id" component={LessonPage} />
+            <Route path="/train" component={Train} />
+            <Route path="/start" component={Start} />
             <Route path="/privacy" component={Privacy} />
             <Route path="/terms" component={Terms} />
             <Route component={NotFound} />
           </Switch>
         </main>
-        <Footer />
+        {!bare && <Footer />}
       </div>
+  );
+}
+
+export default function App() {
+  return (
+    <Router hook={useHashLocation}>
+      <Shell />
     </Router>
   );
 }
