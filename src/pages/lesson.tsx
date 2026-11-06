@@ -5,6 +5,7 @@ import { lessonById, lessonsFor } from "@/lib/academy/curriculum";
 import { sportById, tierById } from "@/lib/academy/sports";
 import { addSubmission, computeScore, letter, saveVideo, useAcademy, bestFor } from "@/lib/academy/store";
 import NotFound from "@/pages/not-found";
+import { LessonDemo } from "@/components/lesson-demo";
 
 export default function LessonPage() {
   const [, p] = useRoute("/lesson/:id");
@@ -76,7 +77,9 @@ export default function LessonPage() {
         <p className="muted text-lg mt-4">{lesson.goal}</p>
         {best && <div className="mt-4 inline-block panel px-4 py-2 text-sm font-bold">Your best: <span className="volt">{best.grade}</span> ({best.score}%)</div>}
 
-        <div className="grid md:grid-cols-2 gap-4 mt-10">
+        <LessonDemo lesson={lesson} accent={sport.accent} />
+
+        <div className="grid md:grid-cols-2 gap-4 mt-4">
           <div className="panel p-6"><div className="ath text-2xl">Drills</div>
             <ol className="mt-4 space-y-3 list-decimal list-inside muted">{lesson.drills.map((d) => <li key={d} className="text-[#E6E6EA]">{d}</li>)}</ol></div>
           <div className="panel p-6"><div className="ath text-2xl">Avoid</div>
@@ -84,7 +87,7 @@ export default function LessonPage() {
         </div>
 
         <div className="panel p-6 mt-4">
-          <div className="ath text-2xl">Film your rep</div>
+          <div className="flex items-center gap-3"><span className="grid place-items-center w-8 h-8 rounded-full text-sm font-black" style={{ background: sport.accent, color: "#0A0A0F" }}>2</span><div className="ath text-2xl">Record or upload your rep</div></div>
           <p className="muted mt-3">{lesson.film}</p>
           <div className="mt-5 rounded-2xl overflow-hidden bg-black aspect-video relative">
             {url ? <video src={url} controls playsInline className="w-full h-full object-contain" /> : <video ref={live} muted playsInline className="w-full h-full object-cover" />}
@@ -103,7 +106,7 @@ export default function LessonPage() {
 
         {url && !result && (
           <div className="panel p-6 mt-4">
-            <div className="ath text-2xl">Grade your rep</div>
+            <div className="flex items-center gap-3"><span className="grid place-items-center w-8 h-8 rounded-full text-sm font-black" style={{ background: sport.accent, color: "#0A0A0F" }}>3</span><div className="ath text-2xl">Grade your rep</div></div>
             <p className="muted mt-2 text-sm">Watch your clip and rate each point honestly. Be your own toughest coach.</p>
             <div className="mt-5 space-y-5">
               {lesson.rubric.map((r, i) => (
