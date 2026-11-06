@@ -26,7 +26,6 @@ export default function Academy() {
               <Link href="/start" className="btn btn-volt">Build my plan <ArrowRight size={18} /></Link>
             )}
             <a href="#sports" className="btn btn-ghost">Browse sports</a>
-            <Link href="/nil" className="btn btn-ghost">NIL365: get seen</Link>
           </div>
         </div>
         <div className="mt-12 grid grid-cols-3 gap-3 max-w-xl">

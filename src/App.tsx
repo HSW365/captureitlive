@@ -28,13 +28,10 @@ import AcademySport from "@/pages/academy-sport";
 import LessonPage from "@/pages/lesson";
 import Train from "@/pages/train";
 import Start from "@/pages/start";
-import Nil from "@/pages/nil";
-import NilAthletePage from "@/pages/nil-athlete";
-import NilScout from "@/pages/nil-scout";
 
 function Shell() {
   const [loc] = useLocation();
-  const arena = loc === "/start" || loc === "/train" || loc.startsWith("/academy") || loc.startsWith("/lesson") || loc.startsWith("/nil");
+  const arena = loc === "/start" || loc === "/train" || loc.startsWith("/academy") || loc.startsWith("/lesson");
   const bare = loc === "/start";
   useEffect(() => { document.documentElement.classList.toggle("arena-root", arena); }, [arena]);
   return (
@@ -62,9 +59,6 @@ function Shell() {
             <Route path="/academy/:sport" component={AcademySport} />
             <Route path="/lesson/:id" component={LessonPage} />
             <Route path="/train" component={Train} />
-            <Route path="/nil" component={Nil} />
-            <Route path="/nil/athlete" component={NilAthletePage} />
-            <Route path="/nil/scout" component={NilScout} />
             <Route path="/start" component={Start} />
             <Route path="/privacy" component={Privacy} />
             <Route path="/terms" component={Terms} />
