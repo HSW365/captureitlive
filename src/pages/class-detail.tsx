@@ -7,11 +7,15 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
 import { Link } from "wouter";
+import { useState } from "react";
+import { PayInstructor, money } from "@/components/pay-instructor";
+import { Heart } from "lucide-react";
 
 export default function ClassDetail() {
   const { id } = useParams<{ id: string }>();
   const { user, profile, requireMember } = useAuth();
   const qc = useQueryClient();
+  const [pay, setPay] = useState<null | "class" | "tip">(null);
 
   const { data: cls } = useQuery({
     queryKey: ["class", id],
@@ -59,6 +63,8 @@ export default function ClassDetail() {
   if (!cls) return <div className="max-w-2xl mx-auto px-6 py-20 text-muted-foreground">Loading class…</div>;
 
   const full = (rsvpCount ?? 0) >= cls.capacity;
+  const paid = (cls.price_cents ?? 0) > 0;
+  const mine = user?.id === cls.instructor_id;
 
   return (
     <div className="max-w-2xl mx-auto px-6 py-16">
@@ -66,6 +72,7 @@ export default function ClassDetail() {
         <Badge tone="teal">{cls.session_type === "virtual" ? "Virtual" : "In person"}</Badge>
         <Badge tone="amber">{cls.level}</Badge>
         {cls.style && <Badge tone="coral">{cls.style}</Badge>}
+        <Badge tone="violet">{paid ? money(cls.price_cents) : "Free"}</Badge>
       </div>
       <h1 className="font-display text-3xl font-medium">{cls.title}</h1>
       <p className="text-muted-foreground mt-2 font-mono text-sm">
@@ -89,16 +96,27 @@ export default function ClassDetail() {
         <p className="mt-4 text-sm"><span className="text-muted-foreground">Meeting link: </span><a href={cls.meeting_link} className="text-coral-600 underline">{cls.meeting_link}</a></p>
       )}
 
-      <div className="mt-8 flex items-center gap-4">
-        {profile ? (
-          <Button onClick={() => toggleRsvp.mutate()} disabled={!myRsvp && full} variant={myRsvp ? "outline" : "primary"}>
-            {myRsvp ? "Cancel RSVP" : full ? "Class full" : "RSVP"}
-          </Button>
+      <div className="mt-8 flex flex-wrap items-center gap-3">
+        {mine ? (
+          <Link href="/dashboard"><Button variant="outline">Manage in dashboard</Button></Link>
+        ) : !profile ? (
+          <Link href={paid ? "/signup" : "/login"}><Button>{paid ? `Book for ${money(cls.price_cents)}` : "Log in to RSVP"}</Button></Link>
+        ) : myRsvp ? (
+          <Button variant="outline" onClick={() => toggleRsvp.mutate()}>{paid ? "You're booked · Cancel" : "Cancel RSVP"}</Button>
+        ) : paid ? (
+          <Button disabled={full} onClick={() => setPay("class")}>{full ? "Class full" : `Book for ${money(cls.price_cents)}`}</Button>
         ) : (
-          <Link href="/login"><Button>Log in to RSVP</Button></Link>
+          <Button onClick={() => toggleRsvp.mutate()} disabled={full}>{full ? "Class full" : "RSVP"}</Button>
+        )}
+        {!mine && cls.instructor && (
+          <Button variant="outline" onClick={() => setPay("tip")}><Heart size={16} /> Tip {cls.instructor.full_name.split(" ")[0]}</Button>
         )}
         <span className="text-sm text-muted-foreground font-mono">{rsvpCount ?? 0} / {cls.capacity} spots filled</span>
       </div>
+      {pay && cls.instructor && (
+        <PayInstructor instructor={cls.instructor} classId={cls.id} classTitle={cls.title} priceCents={cls.price_cents} kind={pay}
+          onClose={() => setPay(null)} />
+      )}
     </div>
   );
 }

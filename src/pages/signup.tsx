@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/lib/supabase";
-import { MEMBERSHIP_PRICE, CASHAPP_URL, CASHAPP_TAG, ZELLE_TO } from "@/lib/config";
+import { MEMBERSHIP_PRICE, CASHAPP_URL, CASHAPP_TAG, ZELLE_TO, INSTRUCTOR_PRICE, INSTRUCTOR_CASHAPP_URL, INSTRUCTOR_MIN_CLASS } from "@/lib/config";
 
 export default function SignUp() {
   const { signUp } = useAuth();
@@ -13,7 +13,9 @@ export default function SignUp() {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState<"student" | "instructor">("student");
+  const [role, setRole] = useState<"student" | "instructor">(/signup\/instructor/.test(window.location.hash) ? "instructor" : "student");
+  const invite = (() => { try { return localStorage.getItem("cil_invite"); } catch { return null; } })();
+  const price = role === "instructor" ? INSTRUCTOR_PRICE : MEMBERSHIP_PRICE;
   const [join, setJoin] = useState(true);
   const [method, setMethod] = useState<"cashapp" | "zelle">("cashapp");
   const [ref, setRef] = useState("");
@@ -28,11 +30,19 @@ export default function SignUp() {
     const { error } = await signUp(email, password, fullName, role);
     if (error) { setLoading(false); return setError(error); }
     if (join) {
-      const { error: payErr } = await supabase.rpc("yogo_pay_claim", { p_method: method, p_ref: ref.trim() });
+      const { error: payErr } = role === "instructor"
+        ? await supabase.rpc("yogo_instructor_claim", { p_method: method, p_ref: ref.trim() })
+        : await supabase.rpc("yogo_pay_claim", { p_method: method, p_ref: ref.trim() });
       if (payErr && !/already/i.test(payErr.message)) { setLoading(false); setError("Account created. " + payErr.message); return; }
     }
     setLoading(false);
-    setLocation("/onboarding");
+    if (invite && role === "student") {
+      const { data: { user: me } } = await supabase.auth.getUser();
+      if (me && me.id !== invite) await supabase.from("yogo_follows").insert({ follower_id: me.id, following_id: invite });
+      try { localStorage.removeItem("cil_invite"); } catch { /* ignore */ }
+      return setLocation(`/instructors/${invite}`);
+    }
+    setLocation(role === "instructor" ? "/profile/edit" : "/onboarding");
   }
 
   return (
@@ -72,8 +82,9 @@ export default function SignUp() {
         <div className="rounded-xl border border-input p-4 space-y-3">
           <label className="flex items-center gap-3 text-sm font-medium">
             <input type="checkbox" checked={join} onChange={(e) => setJoin(e.target.checked)} className="h-4 w-4 accent-coral-500" />
-            Start my membership now · ${MEMBERSHIP_PRICE}/month
+            {role === "instructor" ? `Start my instructor plan · $${INSTRUCTOR_PRICE}/month` : `Start my membership now · $${MEMBERSHIP_PRICE}/month`}
           </label>
+          {role === "instructor" && <p className="text-xs text-muted-foreground -mt-1">Host classes of {INSTRUCTOR_MIN_CLASS}+, set your prices, students pay you directly, keep 100% plus tips.</p>}
           {join && (
             <>
               <div className="grid grid-cols-2 gap-2">
@@ -86,16 +97,16 @@ export default function SignUp() {
               </div>
               <p className="text-sm text-muted-foreground">
                 {method === "cashapp"
-                  ? <>Send <b>${MEMBERSHIP_PRICE}</b> to <a className="text-coral-600 font-medium" href={CASHAPP_URL} target="_blank" rel="noopener">{CASHAPP_TAG}</a> with your email in the note.</>
-                  : <>Send <b>${MEMBERSHIP_PRICE}</b> by Zelle to <b>{ZELLE_TO}</b> with your email in the memo.</>}
-                {" "}Your membership opens right away.
+                  ? <>Send <b>${price}</b> to <a className="text-coral-600 font-medium" href={role === "instructor" ? INSTRUCTOR_CASHAPP_URL : CASHAPP_URL} target="_blank" rel="noopener">{CASHAPP_TAG}</a> with your email in the note.</>
+                  : <>Send <b>${price}</b> by Zelle to <b>{ZELLE_TO}</b> with your email in the memo.</>}
+                {" "}{role === "instructor" ? "Your instructor plan opens right away." : "Your membership opens right away."}
               </p>
               <Input value={ref} onChange={(e) => setRef(e.target.value)} placeholder={method === "cashapp" ? "Your $cashtag" : "Name on your Zelle account"} />
             </>
           )}
         </div>
         {error && <p className="text-sm text-destructive">{error}</p>}
-        <Button type="submit" className="w-full" disabled={loading}>{loading ? "Creating account…" : join ? "Create account & start membership" : "Create free account"}</Button>
+        <Button type="submit" className="w-full" disabled={loading}>{loading ? "Creating account…" : join ? (role === "instructor" ? "Create account & start teaching" : "Create account & start membership") : "Create free account"}</Button>
       </form>
       <p className="text-sm text-muted-foreground mt-6 text-center">
         Already on CaptureItLive? <Link href="/login" className="text-coral-600 font-medium">Log in</Link>

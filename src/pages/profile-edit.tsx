@@ -18,6 +18,10 @@ export default function ProfileEdit() {
     website: profile?.website ?? "",
     instagram: profile?.instagram ?? "",
     specialties: (profile?.specialties ?? []).join(", "),
+    pay_cashapp: profile?.pay_cashapp ?? "",
+    pay_venmo: profile?.pay_venmo ?? "",
+    pay_paypal: profile?.pay_paypal ?? "",
+    pay_zelle: profile?.pay_zelle ?? "",
   });
   const [saving, setSaving] = useState(false);
 
@@ -33,6 +37,10 @@ export default function ProfileEdit() {
       website: form.website,
       instagram: form.instagram,
       specialties: form.specialties.split(",").map((s) => s.trim()).filter(Boolean),
+      pay_cashapp: form.pay_cashapp.trim().replace(/^\$/, "") || null,
+      pay_venmo: form.pay_venmo.trim().replace(/^@/, "") || null,
+      pay_paypal: form.pay_paypal.trim().replace(/^(https?:\/\/)?(www\.)?paypal\.me\//i, "") || null,
+      pay_zelle: form.pay_zelle.trim() || null,
       updated_at: new Date().toISOString(),
     }).eq("id", profile.id);
     await refreshProfile();
@@ -54,6 +62,18 @@ export default function ProfileEdit() {
           <div>
             <Label>Specialties (comma-separated)</Label>
             <Input value={form.specialties} onChange={(e) => setForm({ ...form, specialties: e.target.value })} placeholder={YOGA_STYLES.slice(0, 3).join(", ")} />
+          </div>
+        )}
+        {profile.role === "instructor" && (
+          <div className="rounded-2xl border border-border p-5 space-y-4">
+            <div>
+              <p className="font-display text-lg font-medium">How students pay you</p>
+              <p className="text-xs text-muted-foreground mt-1">Class fees and tips go straight to you. Add at least one.</p>
+            </div>
+            <div><Label>Cash App $cashtag</Label><Input value={form.pay_cashapp} onChange={(e) => setForm({ ...form, pay_cashapp: e.target.value })} placeholder="$yourtag" /></div>
+            <div><Label>Venmo username</Label><Input value={form.pay_venmo} onChange={(e) => setForm({ ...form, pay_venmo: e.target.value })} placeholder="@yourname" /></div>
+            <div><Label>PayPal.me username</Label><Input value={form.pay_paypal} onChange={(e) => setForm({ ...form, pay_paypal: e.target.value })} placeholder="yourname" /></div>
+            <div><Label>Zelle phone or email</Label><Input value={form.pay_zelle} onChange={(e) => setForm({ ...form, pay_zelle: e.target.value })} placeholder="555-555-5555" /></div>
           </div>
         )}
         <div><Label>Website</Label><Input value={form.website} onChange={(e) => setForm({ ...form, website: e.target.value })} /></div>

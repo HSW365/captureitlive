@@ -22,6 +22,11 @@ export interface Profile {
   updated_at: string;
   member_until?: string | null;
   subscription_status?: string | null;
+  instructor_until?: string | null;
+  pay_cashapp?: string | null;
+  pay_zelle?: string | null;
+  pay_venmo?: string | null;
+  pay_paypal?: string | null;
 }
 
 export interface Post {
@@ -59,6 +64,7 @@ export interface YogaClass {
   start_time: string;
   duration_minutes: number;
   capacity: number;
+  price_cents: number;
   created_at: string;
   instructor?: Profile;
   rsvp_count?: number;

@@ -1,7 +1,7 @@
 import { Link, useLocation } from "wouter";
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { MEMBERSHIP_PRICE } from "@/lib/config";
+import { MEMBERSHIP_PRICE, INSTRUCTOR_PRICE, INSTRUCTOR_MIN_CLASS } from "@/lib/config";
 
 const img = (name: string) => `${import.meta.env.BASE_URL}img/${name}.jpg`;
 
@@ -92,7 +92,7 @@ export default function Landing() {
       <section className="px-3 md:px-4 pt-24 md:pt-32">
         <div className="rounded-[28px] md:rounded-[36px] bg-moss-900 text-white overflow-hidden grid lg:grid-cols-[1.1fr_1fr]">
           <div className="p-8 md:p-14 lg:p-16">
-            <h2 className="text-4xl md:text-6xl font-bold leading-[0.95]">One membership. Students and teachers pay the same.</h2>
+            <h2 className="text-4xl md:text-6xl font-bold leading-[0.95]">Practice for ${MEMBERSHIP_PRICE}. Teach and get paid.</h2>
             <div className="mt-10 flex items-baseline gap-3">
               <span className="text-[96px] md:text-[132px] font-extrabold leading-none tracking-[-0.05em]">${MEMBERSHIP_PRICE}</span>
               <span className="text-white/60 text-xl">a month</span>
@@ -108,6 +108,11 @@ export default function Landing() {
             <div className="mt-10 flex flex-wrap items-center gap-5">
               <Link href="/signup"><Button size="lg">Create your account</Button></Link>
               <span className="text-white/55 text-sm">Pay by Cash App or Zelle. No card needed.</span>
+            </div>
+            <div className="mt-10 rounded-2xl border border-white/15 p-6">
+              <p className="text-sm uppercase tracking-widest text-coral-500 font-semibold">For instructors · ${INSTRUCTOR_PRICE}/mo</p>
+              <p className="text-white/85 text-lg mt-2">Host classes of {INSTRUCTOR_MIN_CLASS}+, set your own price, get paid directly by your students and keep 100% of every class fee and tip.</p>
+              <Link href="/pricing" className="inline-block mt-4 font-semibold text-white underline underline-offset-4">Start teaching</Link>
             </div>
           </div>
           <div className="relative min-h-[360px] lg:min-h-0">

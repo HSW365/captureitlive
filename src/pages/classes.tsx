@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
 import { supabase, YogaClass } from "@/lib/supabase";
 import { Badge } from "@/components/ui/badge";
+import { money } from "@/components/pay-instructor";
 import { format } from "date-fns";
 
 async function fetchClasses(): Promise<YogaClass[]> {
@@ -31,7 +32,7 @@ export default function Classes() {
           <Link key={c.id} href={`/classes/${c.id}`} className="rounded-2xl border border-border bg-card p-6 hover:border-coral-300 transition-colors">
             <div className="flex items-center justify-between mb-3">
               <Badge tone="teal">{c.session_type === "virtual" ? "Virtual" : "In person"}</Badge>
-              <Badge tone="amber">{c.level}</Badge>
+              <Badge tone="violet">{c.price_cents > 0 ? money(c.price_cents) : "Free"}</Badge>
             </div>
             <h3 className="font-display text-lg font-medium">{c.title}</h3>
             <p className="text-sm text-muted-foreground mt-1">with {c.instructor?.full_name}</p>

@@ -6,6 +6,9 @@ export interface Membership {
   member: boolean;
   member_until: string | null;
   pending: boolean;
+  instructor?: boolean;
+  instructor_until?: string | null;
+  instructor_pending?: boolean;
 }
 
 interface AuthContextValue {
@@ -14,6 +17,7 @@ interface AuthContextValue {
   loading: boolean;
   membership: Membership | null;
   isMember: boolean;
+  isInstructor: boolean;
   refreshMembership: () => Promise<void>;
   requireMember: () => boolean;
   signUp: (email: string, password: string, fullName: string, role: "instructor" | "student") => Promise<{ error: string | null }>;
@@ -95,6 +99,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   const isMember = !!membership?.member;
+  const isInstructor = !!membership?.instructor;
 
   // Paid membership gates every action. Sends non-members to checkout.
   function requireMember() {
@@ -104,7 +109,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, profile, loading, membership, isMember, refreshMembership, requireMember, signUp, signIn, signOut, refreshProfile }}>
+    <AuthContext.Provider value={{ user, profile, loading, membership, isMember, isInstructor, refreshMembership, requireMember, signUp, signIn, signOut, refreshProfile }}>
       {children}
     </AuthContext.Provider>
   );

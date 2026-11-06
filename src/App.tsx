@@ -46,10 +46,12 @@ function Shell() {
             <Route path="/" component={Landing} />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={SignUp} />
+            <Route path="/signup/instructor" component={SignUp} />
             <Route path="/onboarding">{() => <ProtectedRoute><Onboarding /></ProtectedRoute>}</Route>
             <Route path="/community" component={Community} />
             <Route path="/instructors" component={Instructors} />
             <Route path="/instructors/:id" component={InstructorProfile} />
+            <Route path="/i/:id" component={InstructorProfile} />
             <Route path="/classes" component={Classes} />
             <Route path="/classes/:id" component={ClassDetail} />
             <Route path="/pricing" component={Pricing} />
