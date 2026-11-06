@@ -10,6 +10,8 @@ import { Link } from "wouter";
 import { useState } from "react";
 import { PayInstructor, money } from "@/components/pay-instructor";
 import { Heart } from "lucide-react";
+import { LiveGifts } from "@/components/gift-panel";
+import { isLive } from "@/lib/gifts";
 
 export default function ClassDetail() {
   const { id } = useParams<{ id: string }>();
@@ -113,6 +115,7 @@ export default function ClassDetail() {
         )}
         <span className="text-sm text-muted-foreground font-mono">{rsvpCount ?? 0} / {cls.capacity} spots filled</span>
       </div>
+      {cls.instructor && <LiveGifts instructor={cls.instructor} classId={cls.id} live={isLive(cls.start_time, cls.duration_minutes)} />}
       {pay && cls.instructor && (
         <PayInstructor instructor={cls.instructor} classId={cls.id} classTitle={cls.title} priceCents={cls.price_cents} kind={pay}
           onClose={() => setPay(null)} />

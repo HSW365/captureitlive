@@ -23,6 +23,7 @@ import ProfileEdit from "@/pages/profile-edit";
 import Privacy from "@/pages/privacy";
 import Terms from "@/pages/terms";
 import NotFound from "@/pages/not-found";
+import AdminPayouts from "@/pages/admin-payouts";
 import Academy from "@/pages/academy";
 import AcademySport from "@/pages/academy-sport";
 import LessonPage from "@/pages/lesson";
@@ -68,6 +69,7 @@ function Shell() {
             <Route path="/nil/athlete" component={NilAthletePage} />
             <Route path="/nil/scout" component={NilScout} />
             <Route path="/start" component={Start} />
+            <Route path="/admin/payouts" component={AdminPayouts} />
             <Route path="/privacy" component={Privacy} />
             <Route path="/terms" component={Terms} />
             <Route component={NotFound} />

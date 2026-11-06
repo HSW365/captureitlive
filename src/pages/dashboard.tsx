@@ -13,7 +13,79 @@ import { format } from "date-fns";
 import { InstructorPayPanel } from "@/components/instructor-plan";
 import { money, payMethods } from "@/components/pay-instructor";
 import { INSTRUCTOR_MIN_CLASS } from "@/lib/config";
-import { Copy, Check } from "lucide-react";
+import { Copy, Check, Gift } from "lucide-react";
+import { loadWallet, CASHOUT_MIN_CENTS, giftById, type GiftRow } from "@/lib/gifts";
+
+function GiftEarnings({ profile }: { profile: Profile }) {
+  const qc = useQueryClient();
+  const methods = payMethods(profile);
+  const [method, setMethod] = useState(methods[0]?.id ?? "");
+  const [msg, setMsg] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
+  const { data: w } = useQuery({ queryKey: ["wallet", profile.id], queryFn: loadWallet });
+  const { data: gifts } = useQuery({
+    queryKey: ["my-gifts", profile.id],
+    queryFn: async () => {
+      const { data } = await supabase.from("yogo_gifts").select("*, sender:yogo_profiles!yogo_gifts_sender_id_fkey(full_name)").eq("instructor_id", profile.id).order("created_at", { ascending: false }).limit(15);
+      return (data ?? []) as GiftRow[];
+    },
+  });
+  const { data: payouts } = useQuery({
+    queryKey: ["my-payouts", profile.id],
+    queryFn: async () => (await supabase.from("yogo_payouts").select("*").eq("instructor_id", profile.id).order("created_at", { ascending: false }).limit(10)).data ?? [],
+  });
+  async function cashOut() {
+    setMsg(null); setBusy(true);
+    const { error } = await supabase.rpc("yogo_payout_request", { p_method: method });
+    setBusy(false);
+    if (error) return setMsg(error.message);
+    setMsg("Cash out requested. It's sent to you within 2 business days.");
+    qc.invalidateQueries({ queryKey: ["wallet", profile.id] }); qc.invalidateQueries({ queryKey: ["my-payouts", profile.id] });
+  }
+  const bal = w?.earned_cents ?? 0;
+  return (
+    <section className="mb-12">
+      <h2 className="font-display text-xl font-medium mb-4 flex items-center gap-2"><Gift size={20} className="text-coral-600" /> Live gift earnings</h2>
+      <div className="rounded-3xl bg-moss-900 text-white p-6">
+        <p className="text-xs uppercase tracking-widest opacity-60">Ready to cash out</p>
+        <p className="font-display text-5xl font-medium mt-2">{money(bal)}</p>
+        <p className="text-sm opacity-60 mt-1">{money(w?.lifetime_earned_cents ?? 0)} earned from gifts all time · you keep 70% of every gift</p>
+        {methods.length === 0 ? (
+          <Link href="/profile/edit" className="inline-block mt-5 underline font-semibold">Add a payout method to cash out</Link>
+        ) : w?.payout_pending ? (
+          <p className="mt-5 text-sm">Your cash out is on the way.</p>
+        ) : (
+          <div className="mt-5 flex flex-wrap gap-2 items-center">
+            <select value={method} onChange={(e) => setMethod(e.target.value as typeof method)} className="h-11 rounded-full bg-white/10 border border-white/20 px-4 text-sm">
+              {methods.map((m) => <option key={m.id} value={m.id} className="text-black">{m.label} {m.handle}</option>)}
+            </select>
+            <button disabled={busy || bal < CASHOUT_MIN_CENTS} onClick={cashOut} className="h-11 px-6 rounded-full bg-white text-moss-900 font-semibold disabled:opacity-40">
+              {bal < CASHOUT_MIN_CENTS ? `Cash out at ${money(CASHOUT_MIN_CENTS)}` : `Cash out ${money(bal)}`}
+            </button>
+          </div>
+        )}
+        {msg && <p className="mt-3 text-sm opacity-90">{msg}</p>}
+      </div>
+      {(gifts?.length ?? 0) > 0 && (
+        <div className="mt-4 space-y-1">
+          {gifts!.map((g) => { const G = giftById(g.gift); return (
+            <div key={g.id} className="flex justify-between items-center text-sm py-2 border-b border-border">
+              <span className="flex items-center gap-2">{G && <G.icon size={16} style={{ color: G.color }} />}{g.sender?.full_name ?? "Someone"} sent {G?.name ?? g.gift}</span>
+              <span className="font-mono">+{money(g.instructor_cents)}</span>
+            </div>
+          ); })}
+        </div>
+      )}
+      {(payouts?.length ?? 0) > 0 && (
+        <div className="mt-4 text-xs text-muted-foreground space-y-1">
+          {payouts!.map((p: { id: string; amount_cents: number; status: string; method: string; created_at: string }) => (
+            <p key={p.id}>{format(new Date(p.created_at), "MMM d")} · {money(p.amount_cents)} to {p.method} · {p.status === "pending" ? "on the way" : p.status}</p>
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}
 
 interface ClassPayment { id: string; class_id: string | null; student_id: string; kind: "class" | "tip"; amount_cents: number; method: string; reference: string | null; status: "reported" | "confirmed" | "rejected"; created_at: string; student?: { full_name: string } | null; cls?: { title: string } | null }
 
@@ -236,6 +308,7 @@ export default function Dashboard() {
         </div>
       )}
 
+      {profile.role === "instructor" && isInstructor && <GiftEarnings profile={profile} />}
       {profile.role === "instructor" && isInstructor && <Earnings instructorId={profile.id} />}
 
       {profile.role === "instructor" && (

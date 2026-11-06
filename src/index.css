@@ -197,3 +197,5 @@ html.arena-root header.glass-surface a, html.arena-root header.glass-surface but
 html.arena-root header.glass-surface a[href="#/academy"] { color: #C6F135; }
 html.arena-root footer { border-color: #25252F; color: #9A9AA6; background: #0A0A0F; margin-top: 0; }
 html.arena-root footer * { color: #9A9AA6; }
+
+@keyframes giftpop { 0% { transform: scale(.85); opacity: 0 } 60% { transform: scale(1.03); opacity: 1 } 100% { transform: scale(1) } }

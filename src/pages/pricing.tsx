@@ -12,7 +12,7 @@ const features = [
   "Full community feed — post, comment, connect",
   "Follow every instructor on CaptureItLive",
   "RSVP to every free class",
-  "Book paid classes and tip your instructor",
+  "Book paid classes, tip and send live gifts",
   "Direct message instructors",
   "Ad-free, always",
 ];
@@ -22,6 +22,7 @@ const instructorFeatures = [
   "Set your own price for every class",
   "Students pay you directly by Cash App, Venmo, PayPal or Zelle",
   "Keep 100% of class fees and tips, no commission",
+  "Earn from live gifts during every session, 70% to you",
   "Your own invite link to bring your students in",
   "Earnings dashboard: confirm payments, seats book automatically",
   "Full member access included",
