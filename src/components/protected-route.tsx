@@ -13,8 +13,8 @@ export function ProtectedRoute({ children }: { children: ReactNode }) {
 
 // Signed in AND an active paid member. Everyone else goes to checkout.
 export function MemberRoute({ children }: { children: ReactNode }) {
-  const { user, loading, membership, isMember } = useAuth();
-  if (loading || (user && !membership)) return <Loading />;
+  const { user, loading, membership, isMember, isOwner } = useAuth();
+  if (loading || (user && !membership && !isOwner)) return <Loading />;
   if (!user) return <Redirect to="/login" />;
   if (!isMember) return <Redirect to="/pricing" />;
   return <>{children}</>;

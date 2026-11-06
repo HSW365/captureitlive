@@ -8,12 +8,10 @@ import { money } from "@/components/pay-instructor";
 interface Payout { id: string; full_name: string; amount_cents: number; method: string; handle: string; status: string; created_at: string; decided_at: string | null }
 interface Overview { pending: Payout[]; recent: Payout[]; gift_coins_30d: number; instructor_cents_30d: number; coin_sales_cents_30d: number; owed_cents: number }
 
-const OWNERS = ["hsw365media@gmail.com", "hoodstarent365@gmail.com"];
 
 export default function AdminPayouts() {
-  const { user } = useAuth();
+  const { isOwner: owner } = useAuth();
   const qc = useQueryClient();
-  const owner = !!user?.email && OWNERS.includes(user.email.toLowerCase());
   const { data, error } = useQuery({
     queryKey: ["admin-payouts"],
     queryFn: async () => { const { data, error } = await supabase.rpc("yogo_admin_payouts"); if (error) throw error; return data as Overview; },

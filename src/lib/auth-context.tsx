@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 import type { User } from "@supabase/supabase-js";
 import { supabase, Profile } from "./supabase";
+import { OWNER_EMAILS } from "./config";
 
 export interface Membership {
   member: boolean;
@@ -18,6 +19,7 @@ interface AuthContextValue {
   membership: Membership | null;
   isMember: boolean;
   isInstructor: boolean;
+  isOwner: boolean;
   refreshMembership: () => Promise<void>;
   requireMember: () => boolean;
   signUp: (email: string, password: string, fullName: string, role: "instructor" | "student") => Promise<{ error: string | null }>;
@@ -98,8 +100,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (user) await loadMembership();
   }
 
-  const isMember = !!membership?.member;
-  const isInstructor = !!membership?.instructor;
+  const isMember = !!membership?.member || OWNER_EMAILS.includes((user?.email ?? "").toLowerCase());
+  const isOwner = OWNER_EMAILS.includes((user?.email ?? "").toLowerCase());
+  const isInstructor = !!membership?.instructor || isOwner;
 
   // Paid membership gates every action. Sends non-members to checkout.
   function requireMember() {
@@ -109,7 +112,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, profile, loading, membership, isMember, isInstructor, refreshMembership, requireMember, signUp, signIn, signOut, refreshProfile }}>
+    <AuthContext.Provider value={{ user, profile, loading, membership, isMember, isInstructor, isOwner, refreshMembership, requireMember, signUp, signIn, signOut, refreshProfile }}>
       {children}
     </AuthContext.Provider>
   );

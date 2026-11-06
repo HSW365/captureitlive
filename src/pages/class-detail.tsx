@@ -15,7 +15,7 @@ import { isLive } from "@/lib/gifts";
 
 export default function ClassDetail() {
   const { id } = useParams<{ id: string }>();
-  const { user, profile, requireMember } = useAuth();
+  const { user, profile, requireMember, isOwner } = useAuth();
   const qc = useQueryClient();
   const [pay, setPay] = useState<null | "class" | "tip">(null);
 
@@ -105,6 +105,8 @@ export default function ClassDetail() {
           <Link href={paid ? "/signup" : "/login"}><Button>{paid ? `Book for ${money(cls.price_cents)}` : "Log in to RSVP"}</Button></Link>
         ) : myRsvp ? (
           <Button variant="outline" onClick={() => toggleRsvp.mutate()}>{paid ? "You're booked · Cancel" : "Cancel RSVP"}</Button>
+        ) : paid && isOwner ? (
+          <Button onClick={async () => { await supabase.rpc("yogo_owner_book", { p_class: cls.id }); qc.invalidateQueries({ queryKey: ["my-rsvp", id, user?.id] }); qc.invalidateQueries({ queryKey: ["rsvp-count", id] }); }}>Join free (owner)</Button>
         ) : paid ? (
           <Button disabled={full} onClick={() => setPay("class")}>{full ? "Class full" : `Book for ${money(cls.price_cents)}`}</Button>
         ) : (

@@ -6,7 +6,7 @@ import { SPORTS } from "@/lib/academy/sports";
 import { signed, type NilAthlete, type NilClip, type NilOrg } from "@/lib/nil";
 
 export default function NilScout() {
-  const { user, loading } = useAuth();
+  const { user, loading, isOwner } = useAuth();
   const [org, setOrg] = useState<NilOrg | null | undefined>(undefined);
   const [form, setForm] = useState({ kind: "brand", org_name: "", website: "", contact_email: "" });
   const [list, setList] = useState<NilAthlete[]>([]);
@@ -15,7 +15,7 @@ export default function NilScout() {
   const [clips, setClips] = useState<(NilClip & { url?: string })[]>([]);
   const [o, setO] = useState({ kind: "brand_deal", message: "", amount_text: "" }); const [msg, setMsg] = useState("");
 
-  useEffect(() => { if (user) supabase.from("nil_orgs").select("*").eq("user_id", user.id).maybeSingle().then(({ data }) => setOrg(data as NilOrg | null)); }, [user?.id]); // eslint-disable-line
+  useEffect(() => { if (user && isOwner) { setOrg({ user_id: user.id, kind: "brand", org_name: "HSW365 Media", website: null, contact_email: "hsw365media@gmail.com", approved: true }); return; } if (user) supabase.from("nil_orgs").select("*").eq("user_id", user.id).maybeSingle().then(({ data }) => setOrg(data as NilOrg | null)); }, [user?.id, isOwner]); // eslint-disable-line
   useEffect(() => { if (org?.approved) { let q = supabase.from("nil_athletes").select("*").eq("listed", true); if (sport) q = q.eq("sport", sport); if (level) q = q.eq("level", level); q.then(({ data }) => setList((data as NilAthlete[]) ?? [])); } }, [org?.approved, sport, level]);
   useEffect(() => { if (!open) return; setMsg(""); supabase.from("nil_clips").select("*").eq("user_id", open.user_id).order("created_at", { ascending: false }).then(async ({ data }) => setClips(await Promise.all(((data as NilClip[]) ?? []).map(async (c) => ({ ...c, url: await signed(c.path) }))))); }, [open?.user_id]); // eslint-disable-line
 

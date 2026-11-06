@@ -17,7 +17,7 @@ const links = [
 
 export function Nav() {
   const [location] = useLocation();
-  const { user, profile, signOut } = useAuth();
+  const { user, profile, signOut, isOwner } = useAuth();
   const [open, setOpen] = useState(false);
 
   return (
@@ -44,6 +44,7 @@ export function Nav() {
         <div className="hidden md:flex items-center gap-3">
           {user && profile ? (
             <>
+              {isOwner && <Link href="/admin/payouts" className="text-xs font-mono uppercase tracking-widest text-coral-600 px-2">Owner</Link>}
               <Link href="/messages" className="p-2 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors" aria-label="Messages">
                 <MessageCircle size={20} />
               </Link>
