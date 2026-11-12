@@ -11,5 +11,5 @@ export const INSTRUCTOR_PRICE = 99;
 export const INSTRUCTOR_MIN_CLASS = 10;
 export const INSTRUCTOR_CASHAPP_URL = "https://cash.app/$hsw365/99";
 
-// Owner logins: free, never-expiring access to everything (member, instructor, NIL scouting, admin). Enforced server-side too.
+// Owner logins: free, never-expiring access to everything (member, instructor, admin). Enforced server-side too.
 export const OWNER_EMAILS = ["hsw365media@gmail.com", "hoodstarent365@gmail.com"];
